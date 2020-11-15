@@ -65,8 +65,8 @@ int main(void) {
                 
                 // 바로 여기에서 usb_bulk_write() 메서드를 이용해 데이터 전송 (\n 기호 필요)
                 if (desc->bInterfaceNumber == targetInterfaceNumber) {
-                    int result = usb_bulk_write(u, ep_in, "ABCDEFG\n", 8, 100);
-                    printf("Bulk write result = %d\n", result);
+                    int length = usb_bulk_write(u, ep_in, "ABCDEFG\n", 8, 100);
+                    printf("Bulk write length = %d\n", length);
                 }
             }
             if (u && !claimed) usb_close(u);

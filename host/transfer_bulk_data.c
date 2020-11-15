@@ -32,11 +32,11 @@ int main(void) {
             for (int i = 0; i < dev->config->bNumInterfaces && iface; i++, iface++) {
                 struct usb_interface_descriptor *desc = iface->altsetting;
                 if (!desc) continue;
-                printf("interface #%d: class = %d, subclass = %d, protocol = %d\n",
-                    i,
-                    desc->bInterfaceClass,
-                    desc->bInterfaceSubClass,
-                    desc->bInterfaceProtocol);
+                printf("[ Interface #%d ] (Number=%d)\n", i, desc->bInterfaceNumber);
+                printf("Class = %d, Subclass = %d, Protocol = %d",
+                       desc->bInterfaceClass,
+                       desc->bInterfaceSubClass,
+                       desc->bInterfaceProtocol);
 
                 struct usb_endpoint_descriptor *ep = desc->endpoint;
                 int ep_in = 0, ep_out = 0;
@@ -61,6 +61,9 @@ int main(void) {
                     }
                 }
                 claimed++;
+                
+                // 바로 여기에서 usb_bulk_write() 메서드를 이용해 데이터 전송
+                usb_bulk_write(u, ep_in, "AAAAAAAA", 8, 100);
             }
             if (u && !claimed) usb_close(u);
         }

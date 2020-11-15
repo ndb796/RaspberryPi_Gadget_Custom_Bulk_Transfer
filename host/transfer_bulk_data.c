@@ -21,7 +21,7 @@ int main(void) {
             if (pid > 0 && dev->descriptor.idProduct != pid) continue;
             if (!dev->config) continue;
             if (dev->config->bNumInterfaces < 1) continue;
-            printf("device: vid=%04X, pic=%04X, with %d iface\n",
+            printf("Device: vid=%04X, pid=%04X, with %d interfaces\n",
                 dev->descriptor.idVendor,
                 dev->descriptor.idProduct,
                 dev->config->bNumInterfaces);
@@ -32,8 +32,8 @@ int main(void) {
             for (int i = 0; i < dev->config->bNumInterfaces && iface; i++, iface++) {
                 struct usb_interface_descriptor *desc = iface->altsetting;
                 if (!desc) continue;
-                printf("[ Interface #%d ] (Number=%d)\n", i, desc->bInterfaceNumber);
-                printf("Class = %d, Subclass = %d, Protocol = %d",
+                printf("[ Interface Number = %d ]\n", desc->bInterfaceNumber);
+                printf("Class = %d, Subclass = %d, Protocol = %d\n",
                        desc->bInterfaceClass,
                        desc->bInterfaceSubClass,
                        desc->bInterfaceProtocol);
@@ -47,7 +47,7 @@ int main(void) {
                         printf("IN endpoint number: %d\n", ep_in);
                     } else {
                         if (!ep_out) ep_out = ep->bEndpointAddress;
-                        printf("OUT endpoint: %d\n", ep_out);
+                        printf("OUT endpoint number: %d\n", ep_out);
                     }
                 }
                 if (!ep_in) continue;
@@ -63,7 +63,8 @@ int main(void) {
                 claimed++;
                 
                 // 바로 여기에서 usb_bulk_write() 메서드를 이용해 데이터 전송
-                usb_bulk_write(u, ep_in, "AAAAAAAA", 8, 100);
+                int result = usb_bulk_write(u, ep_in, "AAAAAAAA", 8, 100);
+                printf("Bulk write result = %d\n", result);
             }
             if (u && !claimed) usb_close(u);
         }

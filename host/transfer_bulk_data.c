@@ -3,8 +3,7 @@
 #include <stdint.h>
 #include <usb.h>
 
-void transfer_bulk_data()
-{
+int main(void) {
     int vid = 0x1D6B;
     int pid = 0x0104;
 
@@ -66,8 +65,5 @@ void transfer_bulk_data()
             if (u && !claimed) usb_close(u);
         }
     }
-}
-
-int main(void) {
     return 0;
 }

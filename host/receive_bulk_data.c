@@ -66,7 +66,7 @@ int main(void) {
                 // 바로 여기에서 usb_bulk_read() 메서드를 이용해 데이터 송신 (\n 기호 필요)
                 char buf[8];
                 if (desc->bInterfaceNumber == targetInterfaceNumber) {
-                    int length = usb_bulk_read(u, ep_out, buf, sizeof(buf), 100);
+                    int length = usb_bulk_read(u, ep_out, buf, sizeof(buf), -1);
                     printf("Bulk read length = %d\n", length);
                     if (length <= 0) continue;
                     printf("받은 데이터: %s\n", buf);

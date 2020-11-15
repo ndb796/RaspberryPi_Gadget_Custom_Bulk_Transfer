@@ -9,7 +9,7 @@ fi
 
 /usr/bin/my_usb
 /home/pi/transfer & 
-cat /dev/ttyGS0 >> bulk.log &
+cat /dev/ttyGS0 >> /home/pi/bulk.log &
 
 exit 0
 </pre>

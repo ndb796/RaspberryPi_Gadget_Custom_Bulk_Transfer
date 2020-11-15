@@ -1,0 +1,32 @@
+#!/bin/bash
+cd /sys/kernel/config/usb_gadget/
+mkdir -p my_usb
+cd my_usb
+
+# 기본적인 USB 클래스 명시
+echo 0x1D6B > idVendor # Linux Foundation
+echo 0x0104 > idProduct # Multifunction Composite Gadget
+echo 0x0100 > bcdDevice # v1.0.0
+echo 0x0200 > bcdUSB # USB 2.0
+
+# 내가 만들 USB 장치의 기본적인 이름
+mkdir -p strings/0x409
+echo "0123456789abcdef" > strings/0x409/serialnumber
+echo "Dongbin Na" > strings/0x409/manufacturer
+echo "My USB" > strings/0x409/product
+
+# 하나의 Configuration 정보 작성
+mkdir -p configs/c.1/strings/0x409
+echo "My USB Config 1" > configs/c.1/strings/0x409/configuration
+echo 250 > configs/c.1/MaxPower
+
+################# Bulk Transfer 1 #################
+mkdir -p functions/gser.usb0
+ln -s functions/gser.usb0 configs/c.1/
+
+################# Bulk Transfer 2 #################
+mkdir -p functions/gser.usb1
+ln -s functions/gser.usb1 configs/c.1/
+
+# UDC (Usb Device Controller)
+ls /sys/class/udc > UDC

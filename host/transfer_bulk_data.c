@@ -62,9 +62,11 @@ int main(void) {
                 }
                 claimed++;
                 
-                // 바로 여기에서 usb_bulk_write() 메서드를 이용해 데이터 전송 (\n 기호 
-                int result = usb_bulk_write(u, ep_out, "ABCDEFG\n", 8, 100);
-                printf("Bulk write result = %d\n", result);
+                // 바로 여기에서 usb_bulk_write() 메서드를 이용해 데이터 전송 (\n 기호 필요)
+                if (desc->bInterfaceNumber == 0) { // 인터페이스 0번 (Host → Guest)
+                    int result = usb_bulk_write(u, ep_in, "ABCDEFG\n", 8, 100);
+                    printf("Bulk write result = %d\n", result);
+                }
             }
             if (u && !claimed) usb_close(u);
         }

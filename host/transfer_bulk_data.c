@@ -21,7 +21,7 @@ int main(void) {
             if (pid > 0 && dev->descriptor.idProduct != pid) continue;
             if (!dev->config) continue;
             if (dev->config->bNumInterfaces < 1) continue;
-            printf("Device: vid=%04X, pid=%04X, with %d interfaces\n",
+            printf("Device: vid = %04X, pid = %04X, with %d interfaces\n",
                 dev->descriptor.idVendor,
                 dev->descriptor.idProduct,
                 dev->config->bNumInterfaces);
@@ -63,7 +63,7 @@ int main(void) {
                 claimed++;
                 
                 // 바로 여기에서 usb_bulk_write() 메서드를 이용해 데이터 전송
-                int result = usb_bulk_write(u, ep_in, "AAAAAAAA", 8, 100);
+                int result = usb_bulk_write(u, ep_out, "AAAAAAAA", 8, 100);
                 printf("Bulk write result = %d\n", result);
             }
             if (u && !claimed) usb_close(u);

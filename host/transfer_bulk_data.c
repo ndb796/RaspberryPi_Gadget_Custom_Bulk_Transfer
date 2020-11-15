@@ -62,8 +62,8 @@ int main(void) {
                 }
                 claimed++;
                 
-                // 바로 여기에서 usb_bulk_write() 메서드를 이용해 데이터 전송
-                int result = usb_bulk_write(u, ep_out, "ABCDEFGH", 8, 100);
+                // 바로 여기에서 usb_bulk_write() 메서드를 이용해 데이터 전송 (\n 기호 
+                int result = usb_bulk_write(u, ep_out, "ABCDEFG\n", 8, 100);
                 printf("Bulk write result = %d\n", result);
             }
             if (u && !claimed) usb_close(u);

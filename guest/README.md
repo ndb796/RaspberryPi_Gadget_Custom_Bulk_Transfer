@@ -1,5 +1,15 @@
-#### How to run
+#### How to set
 
+* /etc/rc.local
 <pre>
-sudo /usr/bin/my_usb
+_IP=$(hostname -I) || true
+if [ "$_IP" ]; then
+  printf "My IP address is %s\n" "$_IP"
+fi
+
+/usr/bin/my_usb4
+/home/pi/transfer & 
+cat /dev/ttyGS0 >> bulk.log &
+
+exit 0
 </pre>

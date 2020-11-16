@@ -20,16 +20,13 @@ mkdir -p configs/c.1/strings/0x409
 echo "My USB Config 1" > configs/c.1/strings/0x409/configuration
 echo 250 > configs/c.1/MaxPower
 
-################## Bulk Transfer ###################
+################# Bulk Transfer 1 #################
 mkdir -p functions/gser.usb0
 ln -s functions/gser.usb0 configs/c.1/
 
-################ Interrupt Transfer ################
-mkdir -p functions/hid.usb0
-echo 0 > functions/hid.usb0/protocol
-echo 0 > functions/hid.usb0/subclass
-echo 8 > functions/hid.usb0/report_length
-echo -ne \\x06\\x77\\xFF\\x09\\x00\\xA1\\x01\\x09\\x01\\x15\\x00\\x26\\xFF\\x00\\x85\\x01\\x75\\x08\\x95\\x40\\x81\\x02\\x09\\x02\\x15\\x00\\x26\\xFF\\x00\\x85\\x02\\x75\\x08\\x95\\x40\\x91\\x02\\xC0 > functions/hid.usb0/report_desc
+################# Bulk Transfer 2 #################
+mkdir -p functions/gser.usb1
+ln -s functions/gser.usb1 configs/c.1/
 
 # UDC (Usb Device Controller)
 ls /sys/class/udc > UDC
